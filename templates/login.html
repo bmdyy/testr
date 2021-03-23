@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Testr</title>
+        <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css" integrity="sha384-LTIDeidl25h2dPxrB2Ekgc9c7sEC3CWGM6HeFmuDNUjX76Ert4Z4IY714dhZHPLd" crossorigin="anonymous">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='images/python.png') }}">
+    </head>
+    <body>
+        <div class="login-container">
+            <img class="logo-img" src="{{ url_for('static', filename='images/python.png') }}">
+            <div class="logo">
+                T E S T R
+            </div>
+            <div class="description">
+                An invite-only web-based Python IDE.
+            </div>
+            <div class="quotes">
+                <!-- (Obviously) not real quotes -->
+                <div class="quote">
+                    <div class="text">
+                        "Move over VSCode, Testr is here, and it's not going anywhere!"
+                    </div>
+                    <div class="author">
+                        - StackOverflow
+                    </div>
+                </div>
+                <div class="quote">
+                    <div class="text">
+                        "Just... wow!"
+                    </div>
+                    <div class="author">
+                        - Forbes
+                    </div>
+                </div>
+                <div class="quote">
+                    <div class="text">
+                        "I can't believe we never thought of doing this ourselves. This is genius on so many levels. 5/5 Stars."
+                    </div>
+                    <div class="author">
+                        - Microsoft
+                    </div>
+                </div>
+                <div class="quote">
+                    <div class="text">
+                        "Na des is scho ei fresches Editor"
+                    </div>
+                    <div class="author">
+                        - Technische Universität Wien
+                    </div>
+                </div>
+                <div class="quote">
+                    <div class="text">
+                        "You know what, screw IDLE. From now on we will recommend all #Python programmers to use #Testr."
+                    </div>
+                    <div class="author">
+                        - Python Software Foundation
+                    </div>
+                </div>
+            </div>
+            <form class="pure-form login-form">
+                <fieldset>
+                    <input name="email" type="email" class="pure-input-rounded" placeholder="Email" />
+                    <input name="password" type="password" class="pure-input-rounded" placeholder="Password" />
+                    <button type="submit" class="pure-input-rounded pure-button pure-button-primary">Log in</button>
+                    <a href="#">Reset password</a>
+                </fieldset>
+            </form>
+            <div class="apply">
+                Or<br><br>
+                <a class="pure-input-rounded pure-button pure-button-primary" href="#">Apply</a>
+            </div>
+        </div>
+    </body>
+</html>

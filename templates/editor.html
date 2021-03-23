@@ -1,0 +1,17 @@
+{% extends 'base_template.html' %}
+{% block content %}
+    <script src="{{ url_for('static',filename='js/customKeyEvents.js') }}"></script>
+    <div class="editor">
+            <div class="ta-container editor-code">
+                <form method="POST" name="codeForm">
+                    <textarea name="code" id="ec-ta" onkeydown="customKeyEvents(this, event);" placeholder="print('Hello, Testr!')" autofocus>{{ code }}</textarea>
+                    <label class="editor-label" for="ec-ta">Python 3</label>
+                    <button type="submit" class="pure-button">Run [Ctrl-Enter]</button>
+                </form>
+            </div>
+        <div class="ta-container editor-output">
+            <textarea id="eo-ta" readonly>{{ out }}</textarea>
+            <label class="editor-label" for="eo-ta">Output</label>
+        </div>
+    </div>
+{% endblock %}
