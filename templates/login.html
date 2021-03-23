@@ -64,12 +64,12 @@
                     <input name="email" type="email" class="pure-input-rounded" placeholder="Email" />
                     <input name="password" type="password" class="pure-input-rounded" placeholder="Password" />
                     <button type="submit" class="pure-input-rounded pure-button pure-button-primary">Log in</button>
-                    <a href="#">Reset password</a>
+                    <a href="{{ url_for('reset') }}">Reset password</a>
                 </fieldset>
             </form>
             <div class="apply">
                 Or<br><br>
-                <a class="pure-input-rounded pure-button pure-button-primary" href="#">Apply</a>
+                <a class="pure-input-rounded pure-button pure-button-primary" href="{{ url_for('apply') }}">Apply</a>
             </div>
         </div>
     </body>

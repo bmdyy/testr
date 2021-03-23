@@ -1,5 +1,5 @@
 #!/usr/bin/python3 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 import setup_db
 import subprocess
@@ -9,7 +9,29 @@ con = sqlite3.connect('testr.db')
 
 @app.route('/')
 def index():
+    # TODO: redirect to /login if not logged in,
+    #       otherwise redirect to /editor
+    return redirect(url_for('login'))
+
+@app.route('/login')
+def login():
     return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    return 'logged out'
+
+@app.route('/reset')
+def reset():
+    return 'reset'
+
+@app.route('/apply')
+def apply():
+    return 'apply'
+
+@app.route('/settings')
+def settings():
+    return 'settings'
 
 @app.route('/editor', methods=['GET','POST'])
 def editor():
@@ -19,6 +41,7 @@ def editor():
     elif request.method == 'POST':
         code = request.form['code']
         try:
+            # TODO Filters, blacklist, regex, etc...
             output = subprocess.check_output(['python3','-c',code], stderr=subprocess.STDOUT)
             output = output.decode('utf-8')
         except subprocess.CalledProcessError as exc:

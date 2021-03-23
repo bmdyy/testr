@@ -10,18 +10,18 @@
     <body>
         <div class="container">
             <div class="nav-menu pure-menu">
-                <a href="#" class="pure-menu-heading">
+                <span class="pure-menu-heading">
                     <img class="logo-img" src="{{ url_for('static', filename='images/python.png') }}" />T E S T R
-                </a>
+                </span>
                 <ul class="pure-menu-list">
                     <li class="pure-menu-item profile">
                         Hi, William!
                     </li>
                     <li class="pure-menu-item">
-                        <a href="#" class="pure-menu-link">Settings</a>
+                        <a href="{{ url_for('settings') }}" class="pure-menu-link">Settings</a>
                     </li>
                     <li class="pure-menu-item">
-                        <a href="#" class="pure-menu-link">Log out</a>
+                        <a href="{{ url_for('logout') }}" class="pure-menu-link">Log out</a>
                     </li>
                 </ul>
                 <div class="nav-footer">
