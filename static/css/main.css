@@ -2,6 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
 
 /* Common */
+a:hover {
+    cursor:pointer;
+}
 
 .container {
     width:100%;
@@ -139,7 +142,7 @@
     margin-right:10px;
 }
 
-.login-form fieldset button {
+.gold-button  {
     margin-right:10px;
     background:#cdbdae;
     color:#1f1f1f;
@@ -167,6 +170,91 @@
     color:#1f1f1f;
 }
 
+.inverse-gold-button {
+    border:1px solid #cdbdae;
+    border-radius:2em;
+    background:#2f2f2f;
+    color:#cdbdae;
+}
+
+#reset-container {
+    background:#2f2f2f;
+    color:#cdbdae;
+    position:relative;
+    max-width:max-content;
+    height:max-content;
+    margin:auto;
+    margin-top:10%;
+    padding:2em;
+    -webkit-box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.5);
+}
+
+#reset-container legend {
+    color:#cdbdae;
+    font-weight:bold;
+}
+
+#reset-container label {
+    margin-top:1em;
+}
+
+#apply-container {
+    background:#2f2f2f;
+    color:#cdbdae;
+    position:relative;
+    max-width:max-content;
+    height:max-content;
+    margin:auto;
+    margin-top:5%;
+    padding:2em;
+    -webkit-box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.5);
+}
+
+#apply-container legend {
+    color:#cdbdae;
+    font-weight:bold;
+}
+
+#apply-container label {
+    margin-top:1em;
+}
+
+.close-reset-form {
+    text-decoration: none;
+    color:#cdbdae;
+    font-size:xx-large;
+}
+
+#overlay {
+    background:black;
+    opacity:75%;
+    width:100%;
+    height:100%;
+    position:absolute;
+    top:0;
+    left:0;
+}
+
+.alert {
+    height:min-content;
+    padding:1em;
+    box-sizing: border-box;
+    margin-top:2em;
+    text-align:center;
+}
+
+.alert-success{
+    background:#70d37d;
+}
+
+.alert-error {
+    background:#d67272;
+}
+
 /* editor.html */
 .content {
     background:#1b1b1b;
@@ -175,6 +263,7 @@
 .editor {
     height:100%;
     width:100%;
+    z-index:0;
 }
 
 .editor textarea {
@@ -229,4 +318,31 @@
 
 .editor::-webkit-scrollbar {
     width:0.5em;
+}
+
+#settings-container {
+    background:#2f2f2f;
+    color:#cdbdae;
+    position:absolute;
+    max-width:max-content;
+    height:max-content;
+    top:calc(50% - 250px);
+    left:calc(50% - 600px);
+    padding:2em;
+    -webkit-box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.5);
+    z-index:1;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap:30px;
+}
+
+#settings-container legend {
+    color:#cdbdae;
+    font-weight:bold;
+}
+
+#settings-container label {
+    margin-top:1em;
 }
