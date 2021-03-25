@@ -9,6 +9,8 @@
 ## Description
 Testr is an invite-only web-based IDE for Python, created with the purpose of practicing web-app vulnerabilities. Specifically XSS and Code injecetion / Filter bypassing.
 
+There is a cronjob which emualates admin actions every minute in the docker container.
+
 ## Set Up
 1. Clone the repo locally `git clone https://github.com/bmdyy/testr`
 2. Enter the folder `cd testr`
