@@ -287,7 +287,7 @@ def deny():
                 params = (email,)
                 con = db_utils.db_con()
                 cur = con.cursor()
-                result = cur.execute('UPDATE users SET approved = NULL WHERE email = ?',params)
+                result = cur.execute('DELETE FROM users WHERE email = ?',params)
                 con.commit()
                 con.close()
                 return 'Denied'
