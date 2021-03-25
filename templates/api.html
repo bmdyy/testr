@@ -5,37 +5,19 @@
         <meta charset="utf-8"/>
         <title>Testr / Api</title>
         <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='images/python.png') }}">
-        <script>
-            const re = new RegExp(/(\b)(on\S+)(\s*)=|javascript:|(<\s*)(\/*)script|style(\s*)=|(<\s*)meta/ig);
-            function cleanStr(s) {
-                return s.replaceAll(re, '');
-            }
-            
-            function searchApi() {
-                var q = cleanStr(document.getElementById("q").value);
-                var list = document.getElementsByTagName("h2");
-                var found = false;
-                for (var i = 0; i < list.length && !found; i++) {
-                    if (list[i].id.indexOf(q) >= 0) {
-                        document.getElementById(list[i].id).scrollIntoView();
-                        found = true;
-                    }
-                }
-                if (!found) document.getElementById('msg').innerHTML = 
-                    q + ' does not appear in the API documentation.';
-            }
-        </script>
     </head>
     <body>
         <div style="text-align:center;">
-            <h1>Testr API</h1>
+            <h1>Testr API Developer Docs</h1>
             <h3>v1.8.6</h3>
             <p>&copy; 2021, William Moody</p>
         </div>
         <hr>
-            <input id="q" name="q" placeholder="/editor"/>
-            <button onclick="searchApi()"type="submit">Search</button>
-            <span style="color:red" id="msg"></span>
+            <form>
+                <input id="q" name="q" placeholder="/editor"/>
+                <button type="submit">Search</button>
+                <span style="color:red" id="msg"></span>
+            </form>
         <hr>
         <h2 id="get_index">GET /</h2>
         <p>
@@ -61,6 +43,16 @@
         </p>
         <hr>
 
+        <h2 id="post_approve">POST /approve</h2>
+        <p>
+            Approves a user's application. Ignores requests from non-admins.
+            <br>
+            Requires this body:
+            <br>
+            <code>{email}</code>
+        </p>
+        <hr>
+
         <h2 id="post_change_password">POST /change_password</h2>
         <p>
             Changes a <b>logged in</b> user's password. 
@@ -78,6 +70,16 @@
             Requires this body:
             <br>
             <code>{phrase, phrase2}</code>
+        </p>
+        <hr>
+
+        <h2 id="post_dont">POST /deny</h2>
+        <p>
+            Denies a user's application. Ignores requests from non-admins.
+            <br>
+            Requires this body:
+            <br>
+            <code>{email}</code>
         </p>
         <hr>
 
@@ -138,4 +140,29 @@
             <code>{name}</code>
         </p>
     </body>
+    <script>
+        const re = new RegExp(/(\b)(on\S+)(\s*)=|javascript:|(<\s*)(\/*)script|style(\s*)=|(<\s*)meta/ig);
+        function cleanStr(s) {
+            return s.replaceAll(re, '');
+        }
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        };
+        if (window.location.search.indexOf('q') > -1) {
+            var q = cleanStr(getUrlParameter('q'));
+            var list = document.getElementsByTagName("h2");
+            var found = false;
+            for (var i = 0; i < list.length && !found; i++) {
+                if (list[i].id.indexOf(q) >= 0) {
+                    document.getElementById(list[i].id).scrollIntoView();
+                    found = true;
+                }
+            }
+            if (!found) document.getElementById('msg').innerHTML = 
+                q + ' does not appear in the API documentation.';
+        }
+    </script>
 </html>

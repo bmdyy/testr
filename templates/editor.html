@@ -19,6 +19,11 @@
                     <li class="pure-menu-item profile">
                         Hi, {{ session['user'][3] }}!
                     </li>
+                    {% if session['user'][1] == 1 %}
+                        <li class="pure-menu-item">
+                            <a href="#" onclick="toggleElement('applications-container','inline-grid');toggleElement('overlay','block')" class="pure-menu-link">Manage Apps. [{{ apps|length }}]</a>
+                        </li>
+                    {% endif %}
                     <li class="pure-menu-item">
                         <a href="#" onclick="toggleElement('settings-container','inline-grid');toggleElement('overlay','block')" class="pure-menu-link">Settings</a>
                     </li>
@@ -43,17 +48,58 @@
                 <div class="editor">
                         <div class="ta-container editor-code">
                             <form method="POST" name="codeForm">
-                                <textarea name="code" id="ec-ta" onkeydown="customKeyEvents(this, event);" placeholder="print('Hello, Testr!')" autofocus>{{ code }}</textarea>
+                                <textarea name="code" id="ec-ta" onkeydown="customKeyEvents(this, event);" 
+placeholder="def hello(name):
+    print('Hello, %s!' % name)
+
+hello('Testr')" autofocus>{{ code }}</textarea>
                                 <label class="editor-label" for="ec-ta">Python 3</label>
                                 <button type="submit" class="pure-button">Run [Ctrl-Enter]</button>
                             </form>
                         </div>
                     <div class="ta-container editor-output">
-                        <textarea id="eo-ta" readonly>{{ out }}</textarea>
+                        <textarea id="eo-ta" placeholder="Hello, Testr!" readonly>{{ out }}</textarea>
                         <label class="editor-label" for="eo-ta">Output</label>
                     </div>
                 </div>
                 <div id="overlay" style="display:none"></div>
+                {% if session['user'][1] %}
+                    <div id="applications-container" style="display:none">
+                        <h2>Manage Applications</h2>
+                        <table class="pure-table pure-table-horizontal" id="applications-table">
+                            <thead>
+                                <tr>
+                                    <th>Email</th>
+                                    <th>Name</th>
+                                    <th>Portfolio&nbsp;/&nbsp;Website</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if apps %}
+                                    {% for app in apps %}
+                                        <tr>
+                                            <td>{{ app[0] }}</td>
+                                            <td>{{ app[3] }}</td>
+                                            <td>{% if app[4] != None %}<a href="{{ app[4] }}">Link</a>{% else %}Not given{% endif %}</td>
+                                            <td><button onclick="approve_deny('/approve','{{ app[0] }}');classRow('{{ loop.index }}','row-approved')" class="pure-input-rounded pure-button approve-button">Approve</button></td>
+                                            <td><button onclick="approve_deny('/deny','{{ app[0] }}');classRow('{{ loop.index }}','row-denied')" class="pure-input-rounded pure-button deny-button">Deny</button></td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                        <tr>
+                                            <td>No applications pending.</td>
+                                        </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                        <div style="margin-top:1em;text-align:right;">
+                            <button type="button" class="inverse-gold-button pure-input-rounded pure-button pure-button-primary" 
+                            onclick="toggleElement('applications-container','inline-grid');toggleElement('overlay','block')">Close</button>
+                        </div>
+                    </div>
+                {% endif %}
                 <div id="settings-container" style="display:none">
                     <div class="settings-form">
                         <form class="pure-form pure-form-stacked" method="POST" action="{{ url_for('update_details') }}">
@@ -100,7 +146,7 @@
                     <div></div>
                     <div style="text-align:right;">
                         <button type="button" class="inverse-gold-button pure-input-rounded pure-button pure-button-primary" 
-                        onclick="toggleElement('settings-container','inline-grid');toggleElement('overlay','block')">Cancel</button>
+                        onclick="toggleElement('settings-container','inline-grid');toggleElement('overlay','block')">Close</button>
                     </div>
                 </div>
             </div>

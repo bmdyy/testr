@@ -4,6 +4,10 @@ import sqlite3
 import db_utils
 import subprocess
 import hashlib
+import base64
+import sys
+from io import StringIO
+import contextlib
 
 app = Flask(__name__)
 app.secret_key = '42'
@@ -86,6 +90,7 @@ def reset():
 def apply():
     name = request.form['name']
     email = request.form['email']
+    website = request.form['website']
     phrase = request.form['secret_phrase']
     password = request.form['password']
     password2 = request.form['password2']
@@ -99,8 +104,8 @@ def apply():
             if len(result.fetchall()) == 0:
                 sha256_phrase = hashlib.sha256(phrase.encode('utf-8')).hexdigest()
                 sha256_password = hashlib.sha256(password.encode('utf-8')).hexdigest()
-                params = (email, None, None, name, sha256_password, sha256_phrase)
-                cur.execute('INSERT INTO users VALUES (?,?,?,?,?,?)', params)
+                params = (email, None, None, name, website, sha256_password, sha256_phrase)
+                cur.execute('INSERT INTO users VALUES (?,?,?,?,?,?,?)', params)
                 con.commit()
                 con.close()
                 flash("Application sent!",'success')
@@ -178,7 +183,6 @@ def change_secret_phrase():
     else:
         phrase = request.form['secret_phrase']
         phrase2 = request.form['secret_phrase2']
-
         if phrase and phrase2:
             if phrase == phrase2:
                 sha256_phrase = hashlib.sha256(phrase.encode('utf-8')).hexdigest()
@@ -197,24 +201,96 @@ def change_secret_phrase():
             flash("Please fill out all fields",'error')
             return redirect('/editor')
 
+illegal_keywords = [
+    '__import__','import','compile','delattr','dir','eval', 'execfile', 'file','getattr','globals','hasattr',
+    'input','locals','open','raw_input','reload','setattr','vars','im_class', 'im_func', 'im_self',
+    'func_code', 'func_defaults', 'func_globals', 'func_name','tb_frame', 'tb_next','f_back','f_builtins',
+    'f_code', 'f_exc_traceback','f_exc_type', 'f_exc_value', 'f_globals', 'f_locals','subprocess'
+]
 @app.route('/editor', methods=['GET','POST'])
 def editor():
     if session.get('logged_in') != True:
         return redirect('login')
     else:
         if request.method == 'GET':
-            return render_template('editor.html', code='', out='')
+            apps = None
+            if session['user'][1] == 1:
+                con = db_utils.db_con()
+                cur = con.cursor()
+                result = cur.execute('SELECT * FROM users WHERE approved is null')
+                apps = result.fetchall()
+                con.close()
+
+            return render_template('editor.html', code='', out='', apps=apps)
 
         elif request.method == 'POST':
             code = request.form['code']
             try:
-                # TODO Filters, blacklist, regex, etc...
-                output = subprocess.check_output(['python3','-c',code], stderr=subprocess.STDOUT)
-                output = output.decode('utf-8')
+                bad = False
+                for keyword in illegal_keywords:
+                    if keyword in code:
+                        bad = True
+
+                if not bad:
+                    # NOTE: Switched from Subprocess.Popen to exec for security reasons
+                    # prog = ['python3','-c',code.encode('utf-8')]
+                    # output = subprocess.check_output(prog, stderr=subprocess.STDOUT)
+                    # output = output.decode('utf-8')
+                    out = StringIO()
+                    error = None
+                    with contextlib.redirect_stdout(out):
+                        try:
+                            exec(code)
+                        except Exception as e:
+                            error = e
+                    if error:
+                        output = error
+                    else:
+                        output = out.getvalue()
+                        if output == "":
+                            output = "No output"
+                else:
+                    output = "Illegal Input"
             except subprocess.CalledProcessError as exc:
                 return render_template('editor.html', code=code, out="%s"%exc.output.decode('utf-8'))
             else:
                 return render_template('editor.html', code=code, out=output)
+
+@app.route('/approve',methods=['POST'])
+def approve():
+    if session.get('logged_in') != True:
+        return redirect('login')
+    else:
+        if session['user'][1] != 1:
+            return redirect('index')
+        else:
+            email = request.form['email']
+            if email:
+                params = (email,)
+                con = db_utils.db_con()
+                cur = con.cursor()
+                result = cur.execute('UPDATE users SET approved = 1 WHERE email = ?',params)
+                con.commit()
+                con.close()
+                return 'Approved'
+
+@app.route('/deny',methods=['POST'])
+def deny():
+    if session.get('logged_in') != True:
+        return redirect('login')
+    else:
+        if session['user'][1] != 1:
+            return redirect('index')
+        else:
+            email = request.form['email']
+            if email:
+                params = (email,)
+                con = db_utils.db_con()
+                cur = con.cursor()
+                result = cur.execute('UPDATE users SET approved = NULL WHERE email = ?',params)
+                con.commit()
+                con.close()
+                return 'Denied'
 
 if __name__ == '__main__':
     db_utils.seed_db()

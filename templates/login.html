@@ -87,14 +87,15 @@
             <form class="pure-form pure-form-stacked" method="POST" action="{{ url_for('reset') }}">
                 <fieldset>
                     <legend>Reset password</legend>
-                    <label for="email">Email</label>
-                    <input name="email" type="email" id="email" class="pure-input-rounded" placeholder="Email" />
-                    <label for="secret_phrase">Secret Phrase</label>
-                    <input name="secret_phrase" type="password" id="secret_phrase" class="pure-input-rounded" placeholder="Secret Phrase" />
-                    <label for="password">New Password</label>
-                    <input name="password" type="password" id="password" class="pure-input-rounded" placeholder="Password" />
-                    <label for="password2">Confirm Password</label>
-                    <input name="password2" type="password" id="password2" class="pure-input-rounded" placeholder="Password" />
+                    <label for="email">Email*</label>
+                    <input name="email" type="email" id="email" class="pure-input-rounded" placeholder="Email" required/>
+                    <label for="secret_phrase">Secret Phrase*</label>
+                    <input name="secret_phrase" type="password" id="secret_phrase" class="pure-input-rounded" placeholder="Secret Phrase" required/>
+                    <hr>
+                    <label for="password">New Password*</label>
+                    <input name="password" type="password" id="password" class="pure-input-rounded" placeholder="Password" required/>
+                    <label for="password2">Confirm Password*</label>
+                    <input name="password2" type="password" id="password2" class="pure-input-rounded" placeholder="Password" required/>
                     <br><br>
                     <button type="submit" class="gold-button pure-input-rounded pure-button pure-button-primary">Change Password</button>
                     <button type="button" class="inverse-gold-button pure-input-rounded pure-button pure-button-primary" 
@@ -106,16 +107,22 @@
             <form class="pure-form pure-form-stacked" method="POST" action="/apply">
                 <fieldset>
                     <legend>Apply for Membership</legend>
-                    <label for="name">Name</label>
-                    <input name="name" type="name" id="name" class="pure-input-rounded" placeholder="Name" />
-                    <label for="email">Email</label>
-                    <input name="email" type="email" id="email" class="pure-input-rounded" placeholder="Email" />
-                    <label for="secret_phrase">Secret Phrase</label>
-                    <input name="secret_phrase" type="password" id="secret_phrase" class="pure-input-rounded" placeholder="Secret Phrase" />
-                    <label for="password">Password</label>
-                    <input name="password" type="password" id="password" class="pure-input-rounded" placeholder="Password" />
-                    <label for="password2">Confirm Password</label>
-                    <input name="password2" type="password" id="password2" class="pure-input-rounded" placeholder="Password" />
+                    <label for="name">Name*</label>
+                    <input name="name" type="text" id="name" class="pure-input-rounded" placeholder="Name" required/>
+                    <label for="email">Email*</label>
+                    <input name="email" type="email" id="email" class="pure-input-rounded" placeholder="Email" required/>
+                    <label for="website">Link to portfolio / website</label>
+                    <input name="website" type="text" id="website" class="pure-input-rounded" placeholder="Website" />
+                    <small style="color:#606060">Our admin will review your portfolio
+                        <br>if you chose to include one
+                    </small>
+                    <hr>
+                    <label for="secret_phrase">Secret Phrase*</label>
+                    <input name="secret_phrase" type="password" id="secret_phrase" class="pure-input-rounded" placeholder="Secret Phrase" required/>
+                    <label for="password">Password*</label>
+                    <input name="password" type="password" id="password" class="pure-input-rounded" placeholder="Password" required/>
+                    <label for="password2">Confirm Password*</label>
+                    <input name="password2" type="password" id="password2" class="pure-input-rounded" placeholder="Password" required/>
                     <br><br>
                     <button type="submit" class="gold-button pure-input-rounded pure-button pure-button-primary">Apply</button>
                     <button type="button" class="inverse-gold-button pure-input-rounded pure-button pure-button-primary"

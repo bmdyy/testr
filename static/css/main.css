@@ -2,6 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
 
 /* Common */
+a {
+    text-decoration: none;
+}
 a:hover {
     cursor:pointer;
 }
@@ -263,7 +266,6 @@ a:hover {
 .editor {
     height:100%;
     width:100%;
-    z-index:0;
 }
 
 .editor textarea {
@@ -320,6 +322,51 @@ a:hover {
     width:0.5em;
 }
 
+#applications-container {
+    background:#2f2f2f;
+    color:#cdbdae;
+    position:absolute;
+    width:1000px;
+    height:max-content;
+    max-height:750px;
+    overflow:auto;
+    top:calc(50% - 250px);
+    left:calc(50% - 600px);
+    padding:2em;
+    -webkit-box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.5);
+}
+
+#applications-container thead {
+    background:#cdbdae;
+    color:#1f1f1f;
+}
+
+#applications-container .approve-button {
+    background:#70d37d;
+    border-radius:2em;
+}
+
+#applications-container .deny-button {
+    background:#d67272;
+    border-radius:2em;
+}
+
+#applications-container .row-approved {
+    background:#70d37d;
+    color:#1f1f1f;
+}
+
+#applications-container .row-denied {
+    background:#d67272;
+    color:#1f1f1f;
+}
+
+#applications-container a:visited {
+    color:#7a70d3;
+}
+
 #settings-container {
     background:#2f2f2f;
     color:#cdbdae;
@@ -332,7 +379,6 @@ a:hover {
     -webkit-box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.5);
     -moz-box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.5);
     box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.5);
-    z-index:1;
     display: grid;
     grid-template-columns: auto auto auto;
     grid-gap:30px;
