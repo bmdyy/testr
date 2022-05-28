@@ -6,7 +6,7 @@ RUN apt-get install python3 python3-pip firefox-esr cron -y
 COPY ./.docker/geckodriver /usr/bin/
 
 RUN pip3 install flask
-RUN pip3 install selenium
+RUN pip3 install 'selenium<4.0.0'
 
 COPY ./ /app
 

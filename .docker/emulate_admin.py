@@ -2,11 +2,12 @@
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
 import time
 
-opts = webdriver.FirefoxOptions()
-opts.add_argument("--headless")
-driver = webdriver.Firefox(firefox_options=opts)
+options = FirefoxOptions()
+options.add_argument("--headless")
+driver = webdriver.Firefox(options=options)
 driver.get("http://localhost:5000/login")
 
 e_input = driver.find_element_by_name("email")
