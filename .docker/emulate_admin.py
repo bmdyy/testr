@@ -30,3 +30,4 @@ for (i=0;i<x.length;i++) {
 """)
 time.sleep(10)
 driver.close()
+driver.quit()
